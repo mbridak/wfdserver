@@ -34,7 +34,7 @@ clients. So a group or club can submit a group cabrillo log.
 
 ## Screenshot
 
-![main display](pics/server_pic.png)
+![main display](https://raw.githubusercontent.com/mbridak/wfdserver/master/pics/server_pic.png)
 
 ## Installation
 
