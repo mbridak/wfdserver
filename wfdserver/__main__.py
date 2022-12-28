@@ -82,6 +82,9 @@ MULTICAST_PORT = 2239
 MULTICAST_GROUP = "224.1.1.1"
 INTERFACE_IP = "0.0.0.0"
 
+NODE_RED_SERVER_IP = "127.0.0.1"
+NODE_RED_SERVER_PORT = 12062
+
 NAMEOFCLUB = "The Best Club"
 OURCALL = "XXXX"
 OURCLASS = "XX"
@@ -138,6 +141,8 @@ try:
             POSTALCODE = preference.get("postalcode")
             COUNTRY = preference.get("country")
             EMAIL = preference.get("email")
+            NODE_RED_SERVER_IP = preference.get("node_red_server_ip")
+            NODE_RED_SERVER_PORT = preference.get("node_red_server_port")
     else:
         print("-=* No Settings File Using Defaults *=-")
 except IOError as exception:
@@ -251,7 +256,7 @@ def send_xml_score():
     bytes_to_send = str(xemel).encode("ascii")
     n1mm_socket.sendto(
         bytes_to_send,
-        ("192.168.1.141", 12062),
+        (NODE_RED_SERVER_IP, NODE_RED_SERVER_PORT),
     )
 
 
@@ -882,8 +887,10 @@ def main(_):
             print(f"[{timestamp}] Not JSON: {err}\n{payload}\n")
 
 
-if args.log:
-    cabrillo()
-    curses.endwin()
-    raise SystemExit(1)
-wrapper(main)
+def run():
+    """Main entry point"""
+    if args.log:
+        cabrillo()
+        curses.endwin()
+        raise SystemExit(1)
+    wrapper(main)
