@@ -18,5 +18,7 @@
     },
     "mullticast_group": "224.1.1.1",
     "multicast_port": 2239,
-    "interface_ip": "0.0.0.0"
+    "interface_ip": "0.0.0.0",
+    "node_red_server_ip": "127.0.0.1",
+    "node_red_server_port": 12062
 }
