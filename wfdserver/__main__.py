@@ -22,10 +22,12 @@ import sys
 import threading
 import argparse
 from datetime import datetime
+import pkgutil
 
 from itertools import chain
 from json import JSONDecodeError, loads, dumps
 from pathlib import Path
+from shutil import copyfile
 
 try:
     from lib.server_database import DataBase
@@ -85,6 +87,8 @@ INTERFACE_IP = "0.0.0.0"
 NODE_RED_SERVER_IP = "127.0.0.1"
 NODE_RED_SERVER_PORT = 12062
 
+BONUS = {}
+
 NAMEOFCLUB = "The Best Club"
 OURCALL = "XXXX"
 OURCLASS = "XX"
@@ -143,7 +147,11 @@ try:
             EMAIL = preference.get("email")
             NODE_RED_SERVER_IP = preference.get("node_red_server_ip")
             NODE_RED_SERVER_PORT = preference.get("node_red_server_port")
+            BONUS = preference.get("bonus")
     else:
+        working_path = os.path.dirname(pkgutil.get_loader("wfdserver").get_filename())
+        data_path = working_path + "/data/server_preferences.json"
+        copyfile(data_path, "./server_preferences.json")
         print("-=* No Settings File Using Defaults *=-")
 except IOError as exception:
     logging.critical("%s", exception)
@@ -432,16 +440,18 @@ def calcscore():
         score = score * 2
     # elif not highpower:
     #     score = score * 1
+
     score = score * bandmodemult
-    if preference.get("altpower"):
+
+    if BONUS.get("altpower"):
         score += 500
-    if preference.get("outdoors"):
+    if BONUS.get("outdoors"):
         score += 500
-    if preference.get("notathome"):
+    if BONUS.get("notathome"):
         score += 500
-    if preference.get("satellite"):
+    if BONUS.get("satellite"):
         score += 500
-    if preference.get("antenna"):
+    if BONUS.get("antenna"):
         score += 500
     return score
 
@@ -521,53 +531,53 @@ def cabrillo():
                 "antenna": "Antenna",
             }
 
-            bonuses = preference.get("bonus")
             bonus_points = 0
-            for bonus in bonuses:
-                if bonus == "altpower":
-                    print(
-                        f"SOAPBOX: {bonus_title.get(bonus)} Bonus 500 Points",
-                        end="\r\n",
-                        file=file_descriptor,
-                    )
-                    bonus_points += 500
-                    continue
+            for bonus in BONUS:
+                if BONUS.get(bonus):
+                    if bonus == "altpower":
+                        print(
+                            f"SOAPBOX: {bonus_title.get(bonus)} Bonus 500 Points",
+                            end="\r\n",
+                            file=file_descriptor,
+                        )
+                        bonus_points += 500
+                        continue
 
-                if bonus == "outdoors":
-                    print(
-                        f"SOAPBOX: {bonus_title.get(bonus)} Bonus 500 Points",
-                        end="\r\n",
-                        file=file_descriptor,
-                    )
-                    bonus_points += 500
-                    continue
+                    if bonus == "outdoors":
+                        print(
+                            f"SOAPBOX: {bonus_title.get(bonus)} Bonus 500 Points",
+                            end="\r\n",
+                            file=file_descriptor,
+                        )
+                        bonus_points += 500
+                        continue
 
-                if bonus == "notathome":
-                    print(
-                        f"SOAPBOX: {bonus_title.get(bonus)} Bonus 500 Points",
-                        end="\r\n",
-                        file=file_descriptor,
-                    )
-                    bonus_points += 500
-                    continue
+                    if bonus == "notathome":
+                        print(
+                            f"SOAPBOX: {bonus_title.get(bonus)} Bonus 500 Points",
+                            end="\r\n",
+                            file=file_descriptor,
+                        )
+                        bonus_points += 500
+                        continue
 
-                if bonus == "antenna":
-                    print(
-                        f"SOAPBOX: {bonus_title.get(bonus)} Bonus 500 Points",
-                        end="\r\n",
-                        file=file_descriptor,
-                    )
-                    bonus_points += 500
-                    continue
+                    if bonus == "antenna":
+                        print(
+                            f"SOAPBOX: {bonus_title.get(bonus)} Bonus 500 Points",
+                            end="\r\n",
+                            file=file_descriptor,
+                        )
+                        bonus_points += 500
+                        continue
 
-                if bonus == "satellite":
-                    print(
-                        f"SOAPBOX: {bonus_title.get(bonus)} Bonus 500 Points",
-                        end="\r\n",
-                        file=file_descriptor,
-                    )
-                    bonus_points += 500
-                    continue
+                    if bonus == "satellite":
+                        print(
+                            f"SOAPBOX: {bonus_title.get(bonus)} Bonus 500 Points",
+                            end="\r\n",
+                            file=file_descriptor,
+                        )
+                        bonus_points += 500
+                        continue
 
             print(
                 f"SOAPBOX: Total bonus points: {bonus_points}",
@@ -576,7 +586,7 @@ def cabrillo():
             )
 
             print(
-                f"CLAIMED-SCORE: {calcscore() + bonus_points}",
+                f"CLAIMED-SCORE: {calcscore()}",
                 end="\r\n",
                 file=file_descriptor,
             )
