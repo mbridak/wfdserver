@@ -5,3 +5,4 @@ wfdserver/__pycache__
 rebuild.sh
 wfdserver.egg-info
 dist
+test.py
