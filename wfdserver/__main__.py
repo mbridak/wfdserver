@@ -370,17 +370,16 @@ def get_stats():
     ph = results.get("phonecontacts")
     di = results.get("digitalcontacts")
     bandmodemult = results.get("bandmodemult")
-    highpower = results.get("highpower")
+    # highpower = results.get("highpower")
     qrp = results.get("qrp")
     last15 = results.get("last15")
     lasthour = results.get("lasthour")
 
     score = (int(cw) * 2) + int(ph) + (int(di) * 2)
-    # basescore = score
     if qrp:
-        score = score * 4
-    elif not highpower:
         score = score * 2
+    # elif not highpower:
+    #     score = score * 2
     score = score * bandmodemult
 
     THE_SCREEN.addstr(2, 73, f"{score}", curses.color_pair(7))
