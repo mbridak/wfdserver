@@ -3,6 +3,7 @@ wfdserver/lib/__pycache__
 wfdserver/__pycache__
 *.pyc
 rebuild.sh
+publish.sh
 wfdserver.egg-info
 dist
 test.py
