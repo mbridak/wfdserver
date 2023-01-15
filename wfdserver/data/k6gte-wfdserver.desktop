@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=WFDServer
+StartupWMClass=wfdcurses
+GenericName=K6GTE Winter Field Server
+Comment=Winter Field Day logger
+Keywords=console;commandline;amateur radio;ham;logger;
+Exec=wfdserver
+Icon=k6gte-wfdserver
+Terminal=true
+Type=Application
+Categories=HamRadio;
+StartupNotify=true
+X-GNOME-SingleWindow=true
