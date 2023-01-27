@@ -87,4 +87,7 @@ multicast settings.
 }
 ```
 
+Under the bonus section, if your group qualifies for a bonus, put `true` next
+to the type of bonus.
+
 Save the file and relaunch the wfdserver application.
