@@ -900,7 +900,7 @@ def run():
     """Main entry point"""
     PATH = os.path.dirname(pkgutil.get_loader("wfdserver").get_filename())
     os.system(
-        "xdg-icon-resource install --size 64 --context apps --mode user "
+        "xdg-icon-resource install --size 32 --context apps --mode user "
         f"{PATH}/data/k6gte.wfdserver-32.png k6gte-wfdserver"
     )
     os.system(
@@ -908,7 +908,7 @@ def run():
         f"{PATH}/data/k6gte.wfdserver-64.png k6gte-wfdserver"
     )
     os.system(
-        "xdg-icon-resource install --size 64 --context apps --mode user "
+        "xdg-icon-resource install --size 128 --context apps --mode user "
         f"{PATH}/data/k6gte.wfdserver-128.png k6gte-wfdserver"
     )
     os.system(f"xdg-desktop-menu install {PATH}/data/k6gte-wfdserver.desktop")
