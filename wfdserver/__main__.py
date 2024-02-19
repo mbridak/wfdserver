@@ -21,8 +21,7 @@ import os
 import sys
 import threading
 import argparse
-from datetime import datetime
-import pkgutil
+from datetime import datetime, timezone
 
 from itertools import chain
 from json import JSONDecodeError, loads, dumps
@@ -149,7 +148,7 @@ try:
             NODE_RED_SERVER_PORT = preference.get("node_red_server_port")
             BONUS = preference.get("bonus")
     else:
-        working_path = os.path.dirname(pkgutil.get_loader("wfdserver").get_filename())
+        working_path = os.path.dirname(__loader__.get_filename())
         data_path = working_path + "/data/server_preferences.json"
         copyfile(data_path, "./server_preferences.json")
         print("-=* No Settings File Using Defaults *=-")
@@ -257,7 +256,7 @@ def send_xml_score():
         "<arrlsection>MI</arrlsection>\n<stprvoth>MI</stprvoth>\n<grid6>EN82BK</grid6>\n</qth>\n"
         f"<breakdown>\n{lop}</breakdown>\n"
         f"<score>{calcscore()}</score>\n"
-        f'<timestamp>{datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")}</timestamp>\n'
+        f'<timestamp>{datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")}</timestamp>\n'
         "</dynamicresults>\n"
     )
 
@@ -898,7 +897,7 @@ def main(_):
 
 def run():
     """Main entry point"""
-    PATH = os.path.dirname(pkgutil.get_loader("wfdserver").get_filename())
+    PATH = os.path.dirname(__loader__.get_filename())
     os.system(
         "xdg-icon-resource install --size 32 --context apps --mode user "
         f"{PATH}/data/k6gte.wfdserver-32.png k6gte-wfdserver"
